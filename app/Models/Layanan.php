@@ -17,6 +17,7 @@ class Layanan extends Model
         'jenis',
         'harga',
         'durasi',
+        'status',
     ];
 
     public function orders(){
