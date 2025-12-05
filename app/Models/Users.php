@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Users extends Model
+class Users extends Authenticatable
 {
     protected $table = 'tb_users';
     protected $primaryKey = 'id_user';
@@ -19,6 +20,16 @@ class Users extends Model
         'password',
         'role',
     ];
+
+    protected $hidden = [
+        'password',
+    ];
+
+    public function getAuthIdentifierName()
+    {
+        return 'id_user';
+    }
+
 
     public function orderStatusLog(){
         return $this->hasMany(OrderStatusLog::class, 'id_user', 'id_user');

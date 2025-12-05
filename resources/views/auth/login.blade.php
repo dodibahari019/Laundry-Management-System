@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>D`Laundry | Login</title>
+    <!-- Favicon -->
+    <link rel="icon" href="image/LogoDLaundry.png" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -84,59 +86,10 @@
             <div class="hidden md:block fade-in">
                 <div class="text-center mb-10">
                     <div class="flex items-center justify-center space-x-3 mb-6">
-                        <div class="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center shadow-2xl floating">
-                            <img src="{{ asset('image/LogoDLaundry.png') }}" alt="D`Laundry Logo" style="opacity: .8">
+                        <div class="w-20 h-20 flex items-center justify-center floating">
+                            <img src="image/LogoDLaundry.png" alt="D`Laundry" class="h-20 w-auto opacity-80">
                         </div>
-                        <span class="text-4xl font-extrabold text-gray-900">D`Laundry</span>
-                    </div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Sistem Manajemen Laundry</h1>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        Platform terpercaya untuk mengelola operasional laundry Anda dengan mudah dan efisien
-                    </p>
-                </div>
-
-                <!-- Feature Cards -->
-                <div class="space-y-4">
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-1">Manajemen Pesanan</h3>
-                                <p class="text-gray-600 text-sm">Kelola pesanan cucian dari penerimaan hingga pengambilan dengan mudah</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-1">Data Pelanggan</h3>
-                                <p class="text-gray-600 text-sm">Simpan dan akses informasi pelanggan secara terpusat</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-900 mb-1">Laporan & Analitik</h3>
-                                <p class="text-gray-600 text-sm">Monitor performa bisnis dengan laporan detail dan real-time</p>
-                            </div>
-                        </div>
+                        <span class="text-5xl font-extrabold text-gray-900">D`Laundry</span>
                     </div>
                 </div>
             </div>
@@ -181,7 +134,6 @@
                                     type="text"
                                     id="username"
                                     name="username"
-                                    required
                                     placeholder="Masukkan username"
                                     class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition text-base"
                                 >
@@ -203,7 +155,6 @@
                                     type="password"
                                     id="password"
                                     name="password"
-                                    required
                                     placeholder="Masukkan password"
                                     class="w-full pl-12 pr-12 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition text-base"
                                 >
@@ -333,7 +284,9 @@
                             icon: 'success',
                             title: 'Berhasil!',
                             text: response.message,
-                            showConfirmButton: false,
+                            showConfirmButton: true,
+                            confirmButtonColor: "#6D28D9",
+                            timerProgressBar: true,
                             timer: 1500
                         }).then(() => {
                             // Redirect ke halaman yang ditentukan

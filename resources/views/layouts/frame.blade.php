@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D`Laundry | @yield('Title')</title>
+    <!-- Favicon -->
+    <link rel="icon" href="image/LogoDLaundry.png" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <style>
@@ -147,17 +149,17 @@
         });
 
         // Sidebar Toggle
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
+        // const sidebar = document.getElementById('sidebar');
+        // const sidebarToggle = document.getElementById('sidebarToggle');
 
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-collapsed');
+        // sidebarToggle.addEventListener('click', () => {
+        //     sidebar.classList.toggle('sidebar-collapsed');
 
-            const sidebarTexts = document.querySelectorAll('.sidebar-text');
-            sidebarTexts.forEach(text => {
-                text.style.display = sidebar.classList.contains('sidebar-collapsed') ? 'none' : 'inline';
-            });
-        });
+        //     const sidebarTexts = document.querySelectorAll('.sidebar-text');
+        //     sidebarTexts.forEach(text => {
+        //         text.style.display = sidebar.classList.contains('sidebar-collapsed') ? 'none' : 'inline';
+        //     });
+        // });
 
         // Auto calculate total in Tambah Order form
         const beratInput = document.querySelector('#tambah-order input[type="number"]');

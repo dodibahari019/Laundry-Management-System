@@ -15,12 +15,16 @@ class UserController extends Controller
      */
     public function index()
     {
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
         $dataUsers = Users::orderBy('nama')->paginate(10);
         $jumlahSemua = Users::count();
         $jumlahAdmin = Users::where('role', 'admin')->count();
         $jumlahKasir = Users::where('role', 'kasir')->count();
         $jumlahPetugas = Users::where('role', 'petugas')->count();
-        return view('users.main', compact('dataUsers', 'jumlahSemua', 'jumlahAdmin', 'jumlahKasir', 'jumlahPetugas'));
+        return view('users.main', compact('dataUsers', 'jumlahSemua', 'jumlahAdmin', 'jumlahKasir', 'jumlahPetugas', 'id_user_login', 'username_login', 'role_login', 'nama_login'));
     }
 
      public function search(Request $request)
@@ -167,7 +171,6 @@ class UserController extends Controller
             ]);
         }
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -21,7 +21,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.main');
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
+        return view('dashboard.main', compact('id_user_login', 'username_login', 'role_login', 'nama_login'));
     }
 
     public function getData()
@@ -136,6 +140,126 @@ class DashboardController extends Controller
 
             'queueOrders' => $queueOrders,
             'recentOrders' => $recentOrders,
+        ]);
+    }
+    
+    public function aboutUs(){
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
+        return view('aboutUs.about', compact('id_user_login', 'username_login', 'role_login', 'nama_login'));
+    }
+
+
+    public function landingPage(){
+        if (auth()->check()) {
+            $role = auth()->user()->role;
+
+            return match ($role) {
+                'admin'   => redirect('/dashboard'),
+                'kasir'   => redirect('/orders'),
+                'petugas' => redirect('/orders'),
+                default   => redirect('/login'),
+            };
+        }
+
+        $dataLayananKiloan = Layanan::join('tb_orders', 'tb_layanan.id_layanan', '=', 'tb_orders.id_layanan')
+            ->join('tb_pembayaran', 'tb_orders.id_order', '=', 'tb_pembayaran.id_order')
+            ->select(
+                'tb_layanan.nama_layanan',
+                'tb_layanan.jenis',
+                'tb_layanan.harga',
+                Orders::raw('COUNT(tb_orders.id_order) as jumlah_transaksi'),
+            )
+            ->where('tb_layanan.jenis', 'kiloan')
+            ->where('tb_layanan.status', 'Aktif')
+            ->groupBy('tb_layanan.id_layanan', 'tb_layanan.nama_layanan', 'tb_layanan.jenis', 'tb_layanan.harga')
+            ->orderBy('jumlah_transaksi', 'DESC')
+            ->take(5)
+            ->get();
+
+        $dataLayananSatuan = Layanan::join('tb_orders', 'tb_layanan.id_layanan', '=', 'tb_orders.id_layanan')
+            ->join('tb_pembayaran', 'tb_orders.id_order', '=', 'tb_pembayaran.id_order')
+            ->select(
+                'tb_layanan.nama_layanan',
+                'tb_layanan.jenis',
+                'tb_layanan.harga',
+                Orders::raw('COUNT(tb_orders.id_order) as jumlah_transaksi'),
+            )
+            ->where('tb_layanan.jenis', 'satuan')
+            ->where('tb_layanan.status', 'Aktif')
+            ->groupBy('tb_layanan.id_layanan', 'tb_layanan.nama_layanan', 'tb_layanan.jenis', 'tb_layanan.harga')
+            ->orderBy('jumlah_transaksi', 'DESC')
+            ->take(5)
+            ->get();
+
+         $top4Layanan = Layanan::join('tb_orders', 'tb_layanan.id_layanan', '=', 'tb_orders.id_layanan')
+            ->join('tb_pembayaran', 'tb_orders.id_order', '=', 'tb_pembayaran.id_order')
+            ->select(
+                'tb_layanan.nama_layanan',
+                'tb_layanan.jenis',
+                'tb_layanan.harga',
+                Orders::raw('COUNT(tb_orders.id_order) as jumlah_transaksi'),
+            )
+            ->where('tb_layanan.status', 'Aktif')
+            ->groupBy('tb_layanan.id_layanan', 'tb_layanan.nama_layanan', 'tb_layanan.jenis', 'tb_layanan.harga')
+            ->orderBy('jumlah_transaksi', 'DESC')
+            ->take(5)
+            ->get();
+
+        return view('landingPage', compact('dataLayananKiloan', 'dataLayananSatuan', 'top4Layanan'));
+    }
+
+    public function checkTracking(Request $request)
+    {
+        $request->validate([
+            'nota' => 'required|string'
+        ]);
+
+        $kodeOrder = strtoupper(trim($request->nota));
+
+        // Cari order berdasarkan kode
+        $order = Orders::select([
+            'tb_orders.id_order',
+            'tb_orders.kode_order',
+            'tb_orders.status_order',
+            'tb_orders.tanggal_masuk',
+            'tb_orders.tanggal_selesai',
+            'tb_orders.catatan',
+            'tb_pelanggan.nama',
+            'tb_layanan.nama_layanan',
+            'tb_layanan.jenis',
+        ])
+        ->join('tb_pelanggan', 'tb_pelanggan.id_pelanggan', '=', 'tb_orders.id_pelanggan')
+        ->join('tb_layanan', 'tb_layanan.id_layanan', '=', 'tb_orders.id_layanan')
+        ->where('tb_orders.kode_order', $kodeOrder)
+        ->first();
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kode order tidak ditemukan. Pastikan Anda memasukkan kode dengan benar.'
+            ]);
+        }
+
+        // Ambil riwayat status
+        $statusLogs = OrderStatusLog::select([
+            'tb_order_status_logs.status',
+            'tb_order_status_logs.tanggal_ubah',
+            'tb_users.nama'
+        ])
+        ->join('tb_users', 'tb_order_status_logs.id_user', '=', 'tb_users.id_user')
+        ->where('tb_order_status_logs.id_order', $order->id_order)
+        ->orderBy('tb_order_status_logs.tanggal_ubah', 'DESC')
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'order' => $order,
+                'statusLogs' => $statusLogs
+            ]
         ]);
     }
 

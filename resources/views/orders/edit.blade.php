@@ -14,18 +14,18 @@
     @csrf
     @method('PUT')
     <!-- ID Order (Auto) -->
-    <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-xl border border-purple-200">
+    <div class="p-4 rounded-xl border border-gray-300">
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm text-gray-600 mb-1">Kode Order</p>
-                <p class="text-2xl font-bold gradient-text">{{ $orders->kode_order }}</p>
+                <p class="text-2xl font-bold text-purple-600">{{ $orders->kode_order }}</p>
                 <input readonly hidden name="kode_order" value="{{ $orders->kode_order }}" id="id_kode_order_edit" type="text" class="w-full px-2 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
             </div>
-            <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-sm">
+            {{-- <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-sm">
                 <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Ringkasan Pembayaran -->
-    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+    <div class="bg-white p-6 rounded-xl border border-gray-300">
         <h3 class="text-lg font-bold text-gray-900 mb-4">Ringkasan Pembayaran</h3>
         <div class="space-y-3">
             <div class="flex items-center justify-between">
@@ -162,10 +162,10 @@
             Batal
         </button>
         <button type="button" onclick="ValidateCreateOrderEdit()" class="px-8 py-3 gradient-primary text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center space-x-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>Edit Order</span>
+            </svg> --}}
+            <span>Simpan</span>
         </button>
     </div>
 </form>

@@ -12,7 +12,7 @@
             <!-- Jenis Laporan -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Laporan</label>
-                <select id="reportType" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <select id="reportType" class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
                     <option value="transaksi">Laporan Transaksi</option>
                     <option value="pendapatan">Laporan Pendapatan</option>
                     <option value="pelanggan">Laporan Pelanggan</option>
@@ -23,7 +23,7 @@
             <!-- Periode -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Periode</label>
-                <select onchange="setDateRange()" id="periodType" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <select onchange="setDateRange()" id="periodType" class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
                     <option value="today">Hari Ini</option>
                     <option value="week">Minggu Ini</option>
                     <option value="month">Bulan Ini</option>
@@ -35,26 +35,27 @@
             <!-- Tanggal Mulai -->
             <div id="startDateWrapper">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-                <input type="date" id="startDate" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <input type="date" id="startDate" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
             </div>
 
             <!-- Tanggal Akhir -->
             <div id="endDateWrapper">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
-                <input type="date" id="endDate" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <input type="date" id="endDate" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
             </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex items-center justify-between mt-6 pt-6 border-t border-gray-200">
             <div class="flex space-x-3">
-                <button onclick="TampilkanLaporan()" class="px-6 py-2.5 gradient-primary text-white rounded-xl font-semibold hover:shadow-lg transition flex items-center space-x-2">
+                <button onclick="TampilkanLaporan()" class="px-6 py-3 gradient-primary text-white rounded-xl font-semibold hover:shadow-lg transition flex items-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                     </svg>
                     <span>Tampilkan Laporan</span>
                 </button>
-                <button onclick="resetFilter()" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition flex items-center space-x-2">
+                <button onclick="resetFilter()" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition flex items-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
@@ -63,7 +64,7 @@
             </div>
 
             <div class="flex space-x-3">
-                <button onclick="ExportLaporanToPdf()" class="px-6 py-2.5 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition flex items-center space-x-2">
+                <button onclick="ExportLaporanToPdf()" class="px-6 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition flex items-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                     </svg>

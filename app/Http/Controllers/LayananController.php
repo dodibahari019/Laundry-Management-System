@@ -15,11 +15,15 @@ class LayananController extends Controller
      */
     public function index()
     {
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
         $dataLayanan = Layanan::orderBy('nama_layanan')->paginate(10);
         $jumlahSemua = Layanan::count();
         $jumlahAktif = Layanan::where('status', 'Aktif')->count();
         $jumlahNonAktif = Layanan::where('status', 'Nonaktif')->count();
-        return view('layanan.main', compact('dataLayanan', 'jumlahSemua', 'jumlahAktif', 'jumlahNonAktif'));
+        return view('layanan.main', compact('dataLayanan', 'jumlahSemua', 'jumlahAktif', 'jumlahNonAktif', 'id_user_login', 'username_login', 'role_login', 'nama_login'));
     }
     
     public function search(Request $request)

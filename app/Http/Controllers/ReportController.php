@@ -23,6 +23,10 @@ class ReportController extends Controller
      */
     public function index()
     {
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
         $totalTransaksi = Orders::whereDate('tanggal_masuk', today())->count() ?? 0;
         $totalPendapatan = Orders::whereDate('tanggal_masuk', today())->sum('total') ?? 0;
         $totalPelanggan = Orders::whereDate('tanggal_masuk', today())->distinct('id_pelanggan')->count('id_pelanggan') ?? 0;
@@ -59,7 +63,7 @@ class ReportController extends Controller
         ->whereDate('tb_orders.tanggal_masuk', $currentlyDate)
         ->orderBy('tb_orders.kode_order', 'DESC')
         ->get();
-        return view('reports.main', compact('dataOrder', 'currentlyDate', 'totalTransaksi', 'totalPendapatan', 'totalPelanggan', 'rataRata'));
+        return view('reports.main', compact('dataOrder', 'currentlyDate', 'totalTransaksi', 'totalPendapatan', 'totalPelanggan', 'rataRata', 'id_user_login', 'username_login', 'role_login', 'nama_login'));
     }
 
     public function search(Request $request)

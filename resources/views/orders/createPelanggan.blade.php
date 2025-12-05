@@ -38,10 +38,10 @@
             Batal
         </button>
         <button type="button" onclick="JustRunThisButtonOrders()" class="px-8 py-3 gradient-primary text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center space-x-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>Simpan Pelanggan</span>
+            </svg> --}}
+            <span>Simpan</span>
         </button>
     </div>
 </form>

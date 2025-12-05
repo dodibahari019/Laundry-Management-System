@@ -23,7 +23,7 @@
             <!-- Filter Jenis -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                <select id="filterRole" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <select id="filterRole" class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
                     <option value="">Semua Role</option>
                     <option value="admin">Admin</option>
                     <option value="kasir">Kasir</option>

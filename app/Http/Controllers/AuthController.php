@@ -56,13 +56,13 @@ class AuthController extends Controller
             $redirectMap = [
                 'admin'    => '/dashboard',
                 'kasir'    => '/orders',
-                'operator' => '/orders',
+                'petugas' => '/orders',
             ];
             $redirectUrl = $redirectMap[$role] ?? '/dashboard';
 
             return response()->json([
                 'success'  => true,
-                'message'  => 'Login berhasil! Selamat datang, ' . $user->nama,
+                'message'  => 'Login berhasil! Selamat datang!!!',
                 'redirect' => url($redirectUrl),
             ]);
 

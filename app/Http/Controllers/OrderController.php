@@ -20,6 +20,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $id_user_login = Session::get('id_user');
+        $username_login = Session::get('username');
+        $role_login = Session::get('role');
+        $nama_login = Session::get('nama');
         $currentlyDate = Carbon::now()->format('Y-m-d');
         $dataOrder = Orders::select([
             'tb_orders.id_order',
@@ -51,7 +55,7 @@ class OrderController extends Controller
         $totalDiproses = Orders::whereIn('status_order', ['diproses', 'dicuci', 'disetrika'])->count();
         $totalReady = Orders::where('status_order', 'ready')->count();
         $totalDiambil = Orders::where('status_order', 'diambil')->count();
-        return view('orders.main', compact('dataOrder', 'currentlyDate', 'totalOrder', 'totalMenunggu', 'totalDiproses', 'totalReady', 'totalDiambil'));
+        return view('orders.main', compact('dataOrder', 'currentlyDate', 'totalOrder', 'totalMenunggu', 'totalDiproses', 'totalReady', 'totalDiambil','id_user_login', 'username_login', 'role_login', 'nama_login' ));
     }
 
     public function search(Request $request)
@@ -203,6 +207,7 @@ class OrderController extends Controller
             'tb_layanan.durasi',
             'tb_layanan.status',
         ])->orderBy('tb_layanan.nama_layanan')
+        ->where('status', 'Aktif')
         ->get();
 
         $currentlyDate = Carbon::now()->format('Y-m-d');
@@ -260,6 +265,7 @@ class OrderController extends Controller
             // $tanggalSelesai = Carbon::parse($validated['tanggal_selesai'])
             //     ->setTimeFrom(Carbon::now());
 
+            $id_user_login = Session::get('id_user');
             $now = now('Asia/Jakarta');
 
             $tanggalMasuk = Carbon::parse($validated['tanggal_masuk'])->setTimeFrom($now);
@@ -329,7 +335,7 @@ class OrderController extends Controller
                 'id_order_status_log' => $newIdLog,
                 'id_order' => $newId,
                 'status' => 'menunggu',
-                'id_user' => 'USR001',
+                'id_user' => $id_user_login,
                 'tanggal_ubah' => $tanggalMasuk,
             ]);
 
@@ -555,8 +561,9 @@ class OrderController extends Controller
         ->get();
 
         $currentlyDate = Carbon::now()->format('Y-m-d');
+        $role_login = Session::get('role');
 
-        return view('orders.detail', compact('dataOrder' ,'dataPelanggan', 'dataLayanan', 'currentlyDate', 'dataOrderStatusLogs'));
+        return view('orders.detail', compact('dataOrder' ,'dataPelanggan', 'dataLayanan', 'currentlyDate', 'dataOrderStatusLogs', 'role_login'));
     }
 
     public function cancel(Request $request, string $id_order)
@@ -664,7 +671,10 @@ class OrderController extends Controller
         ->where('tb_orders.id_order', $id_order)
         ->get();
 
-        $currentlyDate = Carbon::now()->format('Y-m-d');
+        $dateNow = Carbon::now()->format('Y-m-d');
+        $now = now('Asia/Jakarta');
+
+        $currentlyDate = Carbon::parse($dateNow)->setTimeFrom($now);
 
         return view('orders.struk', compact('dataOrder' ,'currentlyDate'));
     }

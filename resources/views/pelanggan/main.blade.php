@@ -13,7 +13,7 @@
             <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700 mb-2">Cari Pelanggan</label>
                 <div class="relative">
-                    <input type="text" placeholder="Cari nama, no hp, alamat..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                    <input id="searchInput" type="text" placeholder="Cari nama, no hp, alamat..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
                     <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
@@ -23,16 +23,18 @@
             <!-- Filter Jenis -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Urutkan</label>
-                <select class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
+                <select id="Otherfilter" class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
                     <option value="">Default</option>
                     <option value="terbaru">Terbaru</option>
                     <option value="terlama">Terlama</option>
+                    <option value="nama_asc">Nama A-Z</option>
+                    <option value="nama_desc">Nama Z-A</option>
                 </select>
             </div>
 
             <!-- Button Add -->
             <div class="flex items-end">
-                <button data-url="/layanan/create" class="modal-crud w-full px-4 py-2.5 gradient-primary text-white rounded-xl font-semibold hover:shadow-lg transition flex items-center justify-center space-x-2">
+                <button data-url="/pelanggan/create" class="modal-crud w-full px-4 py-3 gradient-primary text-white rounded-xl font-semibold hover:shadow-lg transition flex items-center justify-center space-x-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -47,9 +49,9 @@
         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
             <div>
                 <h2 class="text-xl font-bold text-gray-900">Daftar Pelanggan</h2>
-                <p class="text-sm text-gray-500 mt-1">Menampilkan 18 pelanggan aktif</p>
+                <p id="jumlahPelangganInfo" class="text-sm text-gray-500 mt-1">Menampilkan {{ $jumlahSemua }} pelanggan aktif</p>
             </div>
-            <div class="flex space-x-3">
+            {{-- <div class="flex space-x-3">
                 <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium text-sm flex items-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -62,7 +64,7 @@
                     </svg>
                     <span>Print</span>
                 </button>
-            </div>
+            </div> --}}
         </div>
 
         <div class="overflow-x-auto">
@@ -72,117 +74,258 @@
         <!-- Pagination -->
         <div class="p-6 border-t border-gray-200 flex items-center justify-between">
             <div class="text-sm text-gray-600">
-                Menampilkan <span class="font-semibold">1-6</span> dari <span class="font-semibold">18</span> layanan
+                {{-- Menampilkan <span class="font-semibold">1-6</span> dari <span class="font-semibold">18</span> layanan --}}
             </div>
-            <div class="flex space-x-2">
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50" disabled>
-                    Previous
-                </button>
-                <button class="px-3 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold">1</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">2</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">3</button>
-                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
-                    Next
-                </button>
-            </div>
-        </div>
-    </div>
+            <div id="paginationContainerPelanggan" class="flex space-x-2">
+                @if($dataPelanggan->onFirstPage())
+                    <button disabled class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 opacity-50">Previous</button>
+                @else
+                    <button data-page="{{ $dataPelanggan->currentPage() - 1 }}" class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Previous</button>
+                @endif
 
-   
-
-    <!-- Modal Edit Layanan -->
-    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Edit Layanan</h2>
-                    <p class="text-sm text-gray-500 mt-1">Perbarui informasi layanan</p>
-                </div>
-                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form class="p-6 space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">ID Layanan</label>
-                        <input type="text" value="LYN001" disabled class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 text-gray-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Layanan *</label>
-                        <input type="text" value="Cuci Kering" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Layanan *</label>
-                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                            <option selected>Kiloan</option>
-                            <option>Satuan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Harga *</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-3 text-gray-500 font-medium">Rp</span>
-                            <input type="number" value="5000" class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Durasi Pengerjaan *</label>
-                        <div class="flex space-x-3">
-                            <input type="number" value="2" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                            <select class="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                                <option>Jam</option>
-                                <option selected>Hari</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
-                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">
-                            <option selected>Aktif</option>
-                            <option>Nonaktif</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi Layanan</label>
-                    <textarea rows="4" placeholder="Jelaskan detail layanan..." class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-100 focus:border-purple-500">Regular laundry service untuk pakaian sehari-hari</textarea>
-                </div>
-
-                <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-                    <button type="button" onclick="closeEditModal()" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition">
-                        Batal
+                @foreach ($dataPelanggan->getUrlRange(1, $dataPelanggan->lastPage()) as $page => $url)
+                    <button data-page="{{ $page }}" class="px-3 py-2 rounded-lg text-sm font-semibold {{ $dataPelanggan->currentPage() == $page ? 'bg-purple-600 text-white' : 'border text-gray-600 hover:bg-gray-50' }}">
+                        {{ $page }}
                     </button>
-                    <button type="submit" class="px-8 py-3 gradient-primary text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center space-x-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span>Update Layanan</span>
-                    </button>
-                </div>
-            </form>
+                @endforeach
+
+                @if($dataPelanggan->hasMorePages())
+                    <button data-page="{{ $dataPelanggan->currentPage() + 1 }}" class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Next</button>
+                @else
+                    <button disabled class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 opacity-50">Next</button>
+                @endif
+            </div>
         </div>
     </div>
 @endsection
 @section('JavascriptSection')
 <script>
-    function openAddModal() {
-        document.getElementById('addModal').classList.remove('hidden');
+    function updateTableUsers(res) {
+        let html = '';
+
+        if (res.data && res.data.length > 0) {
+            res.data.forEach((x, index) => {
+                // Nomor urut
+                let nomor = (res.current_page - 1) * res.per_page + index + 1;
+
+                html += `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="py-4 px-6">
+                        <span class="font-semibold text-gray-900">${nomor}</span>
+                    </td>
+                    <td class="py-4 px-6 text-gray-900">${x.nama}</td>
+                    <td class="py-4 px-6 text-gray-900">${x.no_hp}</td>
+                    <td class="py-4 px-6 text-gray-900">${x.email}</td>
+                    <td class="py-4 px-6 text-gray-900">${x.alamat}</td>
+                    <td class="py-4 px-6">
+                        <div class="flex items-center justify-center space-x-2">
+                            <button data-url="/pelanggan/${x.id_pelanggan}/edit" class="modal-crud text-green-600 hover:text-green-800 p-1" title="Edit">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </button>
+                            <form id="deleteFormPelanggan${x.id_pelanggan}" action="/pelanggan/${x.id_pelanggan}" method="POST" style="display:none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <button onclick="confirmDeletePelanggan('${x.id_pelanggan}', this)" class="text-red-600 hover:text-red-800 p-1" title="Hapus">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+        } else {
+            html = `<tr><td colspan="6" class="text-center py-4 text-gray-500">Data tidak ditemukan</td></tr>`;
+        }
+
+        $('#idBodyTablePelanggan').html(html);
     }
 
-    function closeAddModal() {
-        document.getElementById('addModal').classList.add('hidden');
+    function updateInfoUsers(res) {
+        // Update jumlah layanan
+        $('#jumlahPelangganInfo').html(
+            `Menampilkan ${res.total} Pelanggan Aktif`
+        );
+
+        // Update pagination
+        let paginationHtml = '';
+
+        // Previous
+        if (res.current_page > 1) {
+            paginationHtml += `<button data-page="${res.current_page - 1}" class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Previous</button>`;
+        } else {
+            paginationHtml += `<button disabled class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 opacity-50">Previous</button>`;
+        }
+
+        // Page numbers
+        for (let page = 1; page <= res.last_page; page++) {
+            paginationHtml += `<button data-page="${page}" class="px-3 py-2 rounded-lg text-sm font-semibold ${res.current_page == page ? 'bg-purple-600 text-white' : 'border text-gray-600 hover:bg-gray-50'}">${page}</button>`;
+        }
+
+        // Next
+        if (res.current_page < res.last_page) {
+            paginationHtml += `<button data-page="${res.current_page + 1}" class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Next</button>`;
+        } else {
+            paginationHtml += `<button disabled class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 opacity-50">Next</button>`;
+        }
+
+        $('#paginationContainerPelanggan').html(paginationHtml);
     }
+
+    // Event delegation untuk pagination
+    $(document).on('click', '#paginationContainerPelanggan button[data-page]', function() {
+        let page = $(this).data('page');
+        fetchData(page); // panggil fetchData dengan page tertentu
+    });
+
+
+    // Event delegation untuk pagination
+    $(document).on('click', '.page-btn', function() {
+        let page = $(this).data('page');
+        fetchData(page);
+    });
+
+    let timer;
+    function fetchData(page = 1) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            let searchInput = $('#searchInput').val();
+            let otherFilter = $('#Otherfilter').val();
+
+            $.ajax({
+                url: '/pelanggan/search',
+                type: 'GET',
+                data: { searchInput: searchInput, otherFilter: otherFilter, page: page },
+                success: function(res) {
+                    updateTableUsers(res);
+                    updateInfoUsers(res);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        }, 400);
+    }
+
+    // Event listener
+    $('#searchInput, #Otherfilter').on('keyup change', () => fetchData());
+</script>
+<script>
+    function JustRunThisButtonPelanggan(){
+        let nama = document.getElementById('id_nama').value;
+        let no_hp = document.getElementById('id_no_hp').value;
+        let email = document.getElementById('id_email').value;
+        let alamat = document.getElementById('id_alamat').value;
+
+        if(nama == '' || nama == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Nama Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if(no_hp == '' || no_hp == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi No Hp Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if(email == '' || email == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Email Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if (alamat == '' || alamat == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Alamat Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else {
+            $('#idCreatePelangganForm').trigger('submit');
+        }
+    }
+
+   function JustRunThisButtonPelangganEdit(){
+        let nama = document.getElementById('id_nama_edit').value;
+        let no_hp = document.getElementById('id_no_hp_edit').value;
+        let email = document.getElementById('id_email_edit').value;
+        let alamat = document.getElementById('id_alamat_edit').value;
+
+        if(nama == '' || nama == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Nama Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if(no_hp == '' || no_hp == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi No Hp Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if(email == '' || email == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Email Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else if (alamat == '' || alamat == null){
+            Swal.fire({
+                icon: "warning",
+                confirmButtonColor: "#6D28D9",
+                title: "Peringatan",
+                text: "Harap Isi Alamat Pelanggan!",
+                timer:2000,
+                timerProgressBar: true,
+            });
+        } else {
+            $('#idEditPelangganForm').trigger('submit');
+        }
+}
+</script>
+<script>
+    function confirmDeletePelanggan(id) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data pelanggan akan dihapus permanen!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6D28D9',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit form delete
+            document.getElementById('deleteFormPelanggan' + id).submit();
+        }
+    });
+}
 </script>
 @endsection
 

@@ -3,14 +3,14 @@
         <h2 class="text-2xl font-bold text-gray-900">Tambah Pelanggan Baru</h2>
         <p class="text-sm text-gray-500 mt-1">Isi form di bawah untuk menambahkan pelanggan</p>
     </div>
-    <button onclick="closeCrudSubModal()" class="text-gray-400 hover:text-gray-600">
+    <button onclick="closeCrudModal()" class="text-gray-400 hover:text-gray-600">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
     </button>
 </div>
 
-<form method="POST" id="idCreateSubForm" class="classCreateSubForm p-6 space-y-6">
+<form action="/pelanggan" method="POST" id="idCreatePelangganForm" class="classCreatePelangganForm p-6 space-y-6">
     @csrf
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div>
@@ -34,14 +34,14 @@
     </div>
 
     <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-        <button type="button" onclick="closeCrudSubModal()" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition">
+        <button type="button" onclick="closeCrudModal()" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition">
             Batal
         </button>
-        <button type="button" onclick="MakeNewPelangganButton()" class="px-8 py-3 gradient-primary text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center space-x-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button type="button" onclick="JustRunThisButtonPelanggan()" class="px-8 py-3 gradient-primary text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition flex items-center space-x-2">
+            {{-- <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>Simpan Pelanggan</span>
+            </svg> --}}
+            <span>Simpan</span>
         </button>
     </div>
 </form>
