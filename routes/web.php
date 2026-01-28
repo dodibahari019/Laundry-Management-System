@@ -9,6 +9,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PengeluaranController;
 
 use App\Http\Controllers\OrderCustomerController;
 
@@ -45,36 +46,36 @@ Route::middleware(['auth:pelanggan', 'verified.customer'])->group(function () {
     // ... tambahkan route customer lainnya
 });
 
-Route::controller(OrderCustomerController::class)->group(function(){
+Route::controller(OrderCustomerController::class)->group(function () {
     route::get('/customer/orders', 'index')->name('customer.orders');
     route::get('/customer/orders/{id_order}/detail', 'detail')->name('customer.orders.detail');
 });
 
-Route::controller(AuthController::class)->group(function(){
+Route::controller(AuthController::class)->group(function () {
     route::get('/login', 'index')->name('login');
     route::post('/login', 'login')->name('login.post');
     route::get('/customer-login', 'loginCustomer')->name('loginCustomer');
     route::get('/customer-register', 'register');
 });
 
-Route::controller(DashboardController::class)->group(function(){
+Route::controller(DashboardController::class)->group(function () {
     route::get('/', 'landingPage');
     route::post('/tracking/check', 'checkTracking')->name('tracking.check');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::controller(AuthController::class)->group(function(){
+    Route::controller(AuthController::class)->group(function () {
         route::post('/logout', 'logout');
     });
 
-    Route::controller(DashboardController::class)->group(function(){
+    Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->middleware('role:admin');
         Route::get('/dashboard/getData', 'getData')->middleware('role:admin');
         Route::get('/about-us', 'aboutUs');
     });
 
     Route::middleware(['auth', 'role:admin'])->group(function () {
-        Route::prefix('users')->controller(UserController::class)->group(function(){
+        Route::prefix('users')->controller(UserController::class)->group(function () {
             // MAIN MENU
             route::get('/', 'index');
             // CRUD
@@ -87,12 +88,12 @@ Route::middleware(['auth'])->group(function () {
             route::get('/search', 'search');
         });
 
-        Route::prefix('pelanggan')->controller(PelangganController::class)->group(function(){
+        Route::prefix('pelanggan')->controller(PelangganController::class)->group(function () {
             // MAIN MENU
             route::get('/', 'index');
             // CRUD
             route::get('/create', 'create');
-            route::post('/','store');
+            route::post('/', 'store');
             route::get('/{id_pelanggan}/edit', 'edit');
             route::put('/{id_pelanggan}', 'update');
             route::delete('/{id_pelanggan}', 'destroy');
@@ -100,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
             route::get('/search', 'search');
         });
 
-        Route::prefix('layanan')->controller(LayananController::class)->group(function(){
+        Route::prefix('layanan')->controller(LayananController::class)->group(function () {
             // MAIN MENU
             route::get('/', 'index');
             // CRUD
@@ -113,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
             route::get('/search', 'search');
         });
 
-        Route::prefix('laporan')->controller(ReportController::class)->group(function(){
+        Route::prefix('laporan')->controller(ReportController::class)->group(function () {
             // MAIN
             route::get('/', 'index');
             // DATA TABLE
@@ -121,11 +122,24 @@ Route::middleware(['auth'])->group(function () {
             // PDF
             route::get('/exportPDF', 'exportPdf');
             // EXCEL
-            route::get('/exportExcel', 'exportExcel');
+            route::post('/exportExcel', 'exportExcel')->name('laporan.exportExcel');
+        });
+
+        Route::prefix('pengeluaran')->controller(PengeluaranController::class)->group(function () {
+            // MAIN MENU
+            route::get('/', 'index')->name('pengeluaran.index');
+            // CRUD
+            route::get('/create', 'create')->name('pengeluaran.create');
+            route::post('/', 'store')->name('pengeluaran.store');
+            route::get('/{id}/edit', 'edit')->name('pengeluaran.edit');
+            route::put('/{id}', 'update')->name('pengeluaran.update');
+            route::delete('/{id}', 'destroy')->name('pengeluaran.destroy');
+            // DATA TABLE
+            route::get('/table', 'getTable')->name('pengeluaran.table');
         });
     });
 
-    Route::prefix('orders')->controller(OrderController::class)->group(function(){
+    Route::prefix('orders')->controller(OrderController::class)->group(function () {
         // MAIN
         route::get('/', 'index');
         // CRUD
@@ -146,4 +160,3 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
-

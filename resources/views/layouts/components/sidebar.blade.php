@@ -9,7 +9,7 @@
 
         <!-- Menu -->
         <nav class="space-y-2">
-            @if($role_login == 'admin')
+            @if(auth()->check() && auth()->user()->role == 'admin')
                 @include('layouts.components.sidebarAdmin')
             @elseif($role_login == 'kasir' || $role_login == 'petugas')
                 <!-- Order -->
