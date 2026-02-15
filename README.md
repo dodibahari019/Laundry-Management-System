@@ -9,9 +9,9 @@ A web-based Laundry Management System built with Laravel that manages orders, cu
 Laundry Management System is a full-stack web application designed to support operational management for a laundry business. 
 
 The system supports three main roles:
-### - Customer
-### - Admin
-### - Staff (Petugas)
+- Customer
+- Admin
+- Staff (Petugas)
 
 Customers can create laundry service requests, set pickup locations using map-based services, and complete payments through Midtrans (sandbox simulation).
 Admin manages users, services, employees, orders, and reporting through a dashboard interface.
