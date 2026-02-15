@@ -107,5 +107,4 @@ Future Improvements
 <img width="1366" height="616" alt="image" src="https://github.com/user-attachments/assets/a32033df-0533-4a57-a6f1-d27671daf665" />
 <img width="1363" height="604" alt="image" src="https://github.com/user-attachments/assets/eb022c95-75ae-4c6f-9c2b-41e89125b80f" />
 <img width="843" height="557" alt="image" src="https://github.com/user-attachments/assets/a2d24a2a-284e-408a-930f-d0faa6ba2470" />
-<img width="238" height="475" alt="image" src="https://github.com/user-attachments/assets/ede380ed-7179-4e4f-a8ad-e8e203349ba5" />
 <img width="1366" height="618" alt="image" src="https://github.com/user-attachments/assets/e2e71a8b-a10f-4a68-8d74-8ca4f1e341ba" />
