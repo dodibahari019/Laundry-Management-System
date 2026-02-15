@@ -1,33 +1,77 @@
 # Laundry Management System
 
-A web-based Laundry Management System built with Laravel that provides transaction management, location-based services, and payment gateway integration.
+A web-based Laundry Management System built with Laravel that manages orders, customers, employees, and transactions with location-based services and payment gateway integration.
 
 ---
 
 ## Project Overview
 
-Laundry Management System is a full-stack web application designed to help laundry businesses manage orders, customers, and transactions efficiently.  
+Laundry Management System is a full-stack web application designed to support operational management for a laundry business. 
 
-This system implements RESTful API architecture and integrates location-based services using OpenStreetMap and Nominatim API.  
-It also supports online payment simulation using Midtrans (Sandbox mode).
+The system supports three main roles:
+### - Customer
+### - Admin
+### - Staff (Petugas)
 
-The project was developed as part of backend and full-stack development practice to simulate a real-world transaction system.
+Customers can create laundry service requests, set pickup locations using map-based services, and complete payments through Midtrans (sandbox simulation).
+Admin manages users, services, employees, orders, and reporting through a dashboard interface.
+
+The courier–customer operational workflow is not yet implemented and is planned as a future enhancement.
+
+This project was developed to simulate a real-world transaction system using RESTful architecture and third-party API integration.
 
 ---
 
-## Key Features
+## User Roles & Features
 
-- User and Admin authentication
-- Laundry order management (Create, Update, Track Status)
-- Transaction and payment handling
-- Midtrans payment gateway integration (Simulation mode)
-- Location selection using OpenStreetMap & Leaflet.js
+### Customer
+
+- Register with email (email verification via Mailtrap sandbox)
+- Login with email/password
+- Login using Google OAuth
+- Create laundry service requests
+- Set pickup location using OpenStreetMap (Leaflet.js)
+- Reverse geocoding with Nominatim API
+- View order status
+- View Dashboard 
+- Complete payment using Midtrans (sandbox mode)
+
+### Admin & Staff
+
+- Dashboard overview
+- Manage customers
+- Manage employees (activate/deactivate system access)
+- Manage laundry services
+- Manage orders
+- View transaction reports
+
+---
+
+## Technical Implementation
+
+- RESTful API architecture
+- MVC pattern using Laravel
+- Role-based access control
+- Relational database design (MySQL)
+- Middleware-based authentication
+- Google OAuth integration
+- Email verification (Mailtrap sandbox)
+- Midtrans payment gateway (simulation)
+- OpenStreetMap integration with Leaflet.js
 - Reverse geocoding using Nominatim API
-- RESTful API endpoints
-- Dashboard for monitoring transactions
-- Database relational design with MySQL
 
----
+Current Limitations
+- Courier–customer business workflow is not yet implemented
+- Payment is sandbox simulation only
+- Email verification uses Mailtrap (development environment)
+
+Future Improvements
+
+- Courier assignment and tracking system
+- Real-time order tracking
+- Production payment gateway configuration
+- Notification system
+- Performance optimization
 
 ## Tech Stack
 
@@ -38,7 +82,7 @@ The project was developed as part of backend and full-stack development practice
 - MySQL
 
 ### Frontend
-- Blade Template / (atau React.js jika kamu pakai React)
+- Blade Template
 - JavaScript
 - Tailwind CSS
 
@@ -46,18 +90,9 @@ The project was developed as part of backend and full-stack development practice
 - OpenStreetMap
 - Leaflet.js
 - Nominatim API
-- Midtrans (Sandbox Mode)
-
----
-
-## System Architecture
-
-The system follows a RESTful architecture:
-
-- API routes for order, user, and transaction management
-- Middleware-based authentication
-- MVC design pattern (Laravel)
-- Structured database schema with relational tables
+- Midtrans (Sandbox)
+- Google OAuth
+- Mailtrap
 
 ---
 
